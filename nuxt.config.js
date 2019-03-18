@@ -1,56 +1,56 @@
-import pkg from './package'
+import pkg from './package';
 
 export default {
-  mode: 'spa',
+    mode: 'spa',
 
-  /*
+    /*
   ** Headers of the page
   */
-  head: {
-    title: pkg.name,
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
-  },
+    head: {
+        title: pkg.name,
+        meta: [
+            { charset: 'utf-8' },
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            { hid: 'description', name: 'description', content: pkg.description },
+        ],
+        link: [
+            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        ],
+    },
 
-  /*
+    /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+    loading: { color: '#fff' },
 
-  /*
+    /*
   ** Global CSS
   */
-  css: [
-      '~/assets/styles/app.scss'
-  ],
+    css: [
+        '~/assets/styles/app.scss',
+    ],
 
-  /*
+    /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-      '~/plugins/element-ui',
-      '~/plugins/vue-grid',
-  ],
+    plugins: [
+        '~/plugins/element-ui',
+        '~/plugins/vue-grid',
+    ],
 
-  /*
+    /*
   ** Nuxt.js modules
   */
-  modules: [
-  ],
+    modules: [
+    ],
 
-  /*
+    /*
   ** Build configuration
   */
-  build: {
+    build: {
     /*
     ** You can extend webpack config here
     */
-      extractCSS: true,
-  }
-}
+        extractCSS: true,
+    },
+};

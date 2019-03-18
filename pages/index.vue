@@ -19,7 +19,7 @@
         <hr>
         <div>
             <grid-layout
-                :layout="layout"
+                :layout.sync="layout"
                 :col-num="12"
                 :row-height="25"
                 :is-draggable="isDraggable"
@@ -27,25 +27,27 @@
                 :vertical-compact="true"
                 :margin="[5, 5]"
                 :use-css-transforms="true"
+                @layout-created="layoutCreatedEvent"
             >
-                <grid-item v-for="(item, index) in layout"
-                   :key="index"
-                   :x="item.x"
-                   :y="item.y"
-                   :w="item.w"
-                   :h="item.h"
-                   :i="index"
-                   @resize="resizeEvent"
-                   @move="moveEvent"
-                   @resized="resizedEvent"
-                   @moved="movedEvent"
+                <grid-item
+                    v-for="(item) in layout"
+                    :key="item.i"
+                    :x="item.x"
+                    :y="item.y"
+                    :w="item.w"
+                    :h="item.h"
+                    :i="item.i"
+                    @resize="resizeEvent"
+                    @move="moveEvent"
+                    @resized="resizedEvent"
+                    @moved="movedEvent"
                 >
                     <div class="image-item">
                         {{ text }}
                         <span
                             v-if="canEdit"
-                            @click="deleteItem(item)"
                             class="el-icon-delete delete-item"
+                            @click="deleteItem(item)"
                         />
                     </div>
                 </grid-item>
@@ -56,12 +58,29 @@
 
 <script>
     import _findIndex from 'lodash/findIndex';
+
     const layoutDefault = [
-        {x: 0, y: 0, w: 2, h: 2},
-        {x: 1, y: 1, w: 2, h: 4},
-        {x: 2, y: 2, w: 2, h: 5},
-        {x: 3, y: 3, w: 2, h: 5},
-        {x: 4, y: 4, w: 2, h: 5}
+        {
+            x: 0, y: 0, w: 3, h: 3, i: '0',
+        },
+        {
+            x: 2, y: 0, w: 2, h: 4, i: '1',
+        },
+        {
+            x: 4, y: 0, w: 2, h: 5, i: '2',
+        },
+        {
+            x: 6, y: 0, w: 2, h: 3, i: '3',
+        },
+        {
+            x: 8, y: 0, w: 2, h: 3, i: '4',
+        },
+        {
+            x: 10, y: 0, w: 2, h: 3, i: '5',
+        },
+        {
+            x: 0, y: 5, w: 2, h: 5, i: '6',
+        },
     ];
 
     export default {
@@ -72,8 +91,8 @@
                 isDraggable: false,
                 isResizable: false,
                 canEdit: false,
-                text: 'Việt Nam vô địch'
-            }
+                text: 'Việt Nam vô địch',
+            };
         },
 
         methods: {
@@ -88,35 +107,43 @@
                 this.edit = false;
                 this.isDraggable = false;
                 this.isResizable = false;
-                this.canEdit = false
+                this.canEdit = false;
             },
 
 
             deleteItem(item) {
-                let itemIndex = _findIndex(this.layout, item => item.i === i);
-                console.log(itemIndex)
+                const newLayout = [...this.layout];
+                const itemIndex = _findIndex(this.layout, (data => data.i === item.i));
+                newLayout.splice(itemIndex, 1);
+                this.layout = newLayout;
             },
 
             addContent() {
-                this.layout.push({x: 0, y: 0, w:2, h:2, i:this.layout.length + 1})
+                this.layout.push({
+                    x: 0, y: 0, w: 3, h: 3, i: `${this.layout.length + 1}`,
+                });
             },
 
-            resizeEvent: function(i, newH, newW, newHPx, newWPx){
-                console.log("RESIZE i=" + i + ", H=" + newH + ", W=" + newW + ", H(px)=" + newHPx + ", W(px)=" + newWPx);
+            resizeEvent(i, newH, newW, newHPx, newWPx) {
+                console.log(`RESIZE i=${i}, H=${newH}, W=${newW}, H(px)=${newHPx}, W(px)=${newWPx}`);
             },
 
-            movedEvent: function(i, newX, newY){
-                console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
+            movedEvent(i, newX, newY) {
+                console.log(`MOVED i=${i}, X=${newX}, Y=${newY}`);
             },
 
-            resizedEvent: function(i, newH, newW, newHPx, newWPx){
-                console.log("RESIZED i=" + i + ", H=" + newH + ", W=" + newW + ", H(px)=" + newHPx + ", W(px)=" + newWPx);
+            resizedEvent(i, newH, newW, newHPx, newWPx) {
+                console.log(`RESIZED i=${i}, H=${newH}, W=${newW}, H(px)=${newHPx}, W(px)=${newWPx}`);
             },
 
-            moveEvent: function(i, newX, newY){
-                console.log("MOVE i=" + i + ", X=" + newX + ", Y=" + newY);
+            moveEvent(i, newX, newY) {
+                console.log(`MOVE i=${i}, X=${newX}, Y=${newY}`);
             },
-        }
+
+            layoutCreatedEvent(newLayout) {
+                console.log(`Created layout: ${newLayout}`);
+            },
+        },
     };
 </script>
 
