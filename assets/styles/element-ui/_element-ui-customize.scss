@@ -1,0 +1,58 @@
+.el-notification {
+    border-radius: 3px;
+    padding: 20px 26px 20px 13px;
+
+    &__title {
+        font-weight: 400;
+        margin-bottom: 10px;
+
+        &:empty {
+            display: none;
+        }
+    }
+
+    &__content {
+        margin: 0;
+        text-align: left;
+    }
+
+    &__closeBtn {
+        top: 21px;
+    }
+}
+
+.el-dropdown-menu {
+    &__item {
+        & > * {
+            margin: 0 -20px;
+            padding: 0 20px;
+        }
+
+        & > a {
+            display: block;
+        }
+    }
+
+    &--medium &__item {
+        & > * {
+            margin: 0 -17px;
+            padding: 0 17px;
+        }
+    }
+
+    &.el-dropdown-menu--wide {
+        .el-dropdown-menu__item {
+            min-width: 150px;
+        }
+    }
+}
+
+.el-button {
+    outline: none !important;
+}
+
+.el-autocomplete-suggestion {
+    .el-scrollbar {
+        border-radius: 4px;
+    }
+}
